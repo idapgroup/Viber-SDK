@@ -18,8 +18,12 @@ composer require idapgroup/viber-sdk
 
 or add
 
-```
-"idapgroup/viber-sdk": "^0.1.0"
+```json
+{
+  "require": {
+      "idapgroup/viber-sdk": "^0.2.0"
+  }
+}
 ```
 
 to the require section of your `composer.json` file.
@@ -28,7 +32,7 @@ to the require section of your `composer.json` file.
 
 ### Create an Api client
 
-```
+```php
 <?php
 
 require 'vendor/autoload.php';
@@ -48,23 +52,32 @@ $client     = new Client(['login' => 'Your login', 'password' => 'Your password'
 
 // Instantiate an Api client.
 $api        = new Api($config, $client);
+```
 
+### Configuration
+
+#### Viber message
+
+```php
+$viber->setTtl(60);                                                 // require
+$viber->setIosExpirityText('Text for ios when message expires');    // require
+$viber->setText('Text for viber');                                  // require
+$viber->setImgUrl('https://path-to-img.com');
+$viber->setCaption('Click me');
+$viber->setAction('https://clicked.org');
+```
+
+#### Sms
+
+```php
+$sms->setText('Text for sms');                                      // require
+$sms->setAlphaName('Alpha name');                                   // require
+$sms->setTtl(60);                                                   // require
 ```
 
 ### Send a message
 
-```
-$viber->setTtl(60);                                                 // require for viber
-$viber->setIosExpirityText('Text for ios when message expires');    // require for viber
-$viber->setText('Text for viber');                                  // require for viber
-$viber->setImgUrl('https://path-to-img.com');
-$viber->setCaption('Click me');
-$viber->setAction('https://clicked.org');
-
-$sms->setText('Text for sms');                                      // require for sms
-$sms->setAlphaName('Alpha name');                                   // require for sms
-$sms->setTtl(60);                                                   // require for sms
-
+```php
 $parameter->setPhoneNumber(380123456789);                           // require
 $parameter->setIsPromotional(true);                                 // require
 $parameter->setChannels(['viber', 'sms']);                          // require
@@ -82,23 +95,23 @@ print_r ($response);
 
 ### Get short detail report by message id
 
-```
+```php
 $response = $api->getShortDrByMessageId('769417569');
 ```
 
 ### Get short detail report by extra id
 
-```
+```php
 $response = $api->getShortDrByExtraId('2j4h89932kjhs');
 ```
 
 ### Get full detail report by message id
 
-```
+```php
 $response = $api->getFullDrByMessageId('769417569');
 ```
 ### Get full detail report by extra id
 
-```
+```php
 $response = $api->getFullDrByExtraId('2j4h89932kjhs');
 ```

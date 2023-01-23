@@ -1,0 +1,27 @@
+{
+  "name": "idapgroup/viber-sdk",
+  "type": "library",
+  "description": "A PHP wrapper for GMS-worldwide Api",
+  "homepage": "https://github.com/idapgroup/Viber-SDK",
+  "keywords": [
+    "viber",
+    "sms"
+  ],
+  "license": "BSD 3-Clause License",
+  "version": "0.1.0",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Igor Matviichuk",
+      "email": "igor.matviichuk@idapgroup.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "IdapGroup\\ViberSdk\\": "src"
+    }
+  }
+}

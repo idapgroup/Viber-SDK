@@ -92,7 +92,7 @@ class Api implements ApiInterface
      * @param string $url
      * @param array  $params
      *
-     * @return mixed
+     * @return array
      * @throws ResponseException
      */
     protected function call(string $method, string $url, array $params = []): array

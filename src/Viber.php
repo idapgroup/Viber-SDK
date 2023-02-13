@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IdapGroup\ViberSdk;
 
 use IdapGroup\ViberSdk\Exceptions\InvalidConfigException;
@@ -15,39 +17,70 @@ class Viber implements ViberInterface
     const   TTL_MIN_VALUE = 15;
     const   TTL_MAX_VALUE = 86400;
 
-    private $text;
-    private $img;
-    private $ttl;
-    private $caption;
-    private $action;
-    private $ios_expirity_text;
+    private string $text;
+    private string $img;
+    private int $ttl;
+    private string $caption;
+    private string $action;
+    private string $ios_expirity_text;
 
-    public function setText($text)
+    /**
+     * @param string $text
+     *
+     * @return void
+     */
+    public function setText(string $text): void
     {
         $this->text = $text;
     }
 
-    public function setImgUrl($imgUrl)
+    /**
+     * @param string $imgUrl
+     *
+     * @return void
+     */
+    public function setImgUrl(string $imgUrl): void
     {
         $this->img = $imgUrl;
     }
 
-    public function setCaption($caption)
+    /**
+     * @param string $caption
+     *
+     * @return void
+     */
+    public function setCaption(string $caption): void
     {
         $this->caption = $caption;
     }
 
-    public function setAction($action)
+    /**
+     * @param string $action
+     *
+     * @return void
+     */
+    public function setAction(string $action): void
     {
         $this->action = $action;
     }
 
-    public function setIosExpirityText($ios_expirity_text)
+    /**
+     * @param string $ios_expirity_text
+     *
+     * @return void
+     */
+    public function setIosExpirityText(string $ios_expirity_text): void
     {
         $this->ios_expirity_text = $ios_expirity_text;
     }
 
-    public function setTtl($ttl)
+    /**
+     * @param int $ttl
+     *
+     * @return void
+     * @throws InvalidConfigException
+     */
+    public function setTtl(int $ttl): void
     {
         if ($ttl < self::TTL_MIN_VALUE || $ttl > self::TTL_MAX_VALUE) {
             throw new InvalidConfigException('Set valid ttl value');
@@ -56,7 +89,10 @@ class Viber implements ViberInterface
         $this->ttl = $ttl;
     }
 
-    public function getModifyParameters()
+    /**
+     * @throws InvalidConfigException
+     */
+    public function getModifyParameters(): array
     {
         if (!isset($this->ios_expirity_text) || !isset($this->ttl) || !isset($this->text)) {
             throw new InvalidConfigException('Set all require parameters');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IdapGroup\ViberSdk\Interfaces;
 
 /**
@@ -9,5 +11,8 @@ namespace IdapGroup\ViberSdk\Interfaces;
  */
 interface ParameterInterface
 {
-    public function getModifyParameters();
+    /**
+     * @return array
+     */
+    public function getModifyParameters(): array;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IdapGroup\ViberSdk;
 
 use IdapGroup\ViberSdk\Exceptions\ResponseException;
@@ -18,12 +20,12 @@ class Api implements ApiInterface
     /**
      * @var ConfigInterface
      */
-    protected $config;
+    protected ConfigInterface $config;
 
     /**
      * @var ClientInterface
      */
-    protected $client;
+    protected ClientInterface $client;
 
     /**
      * Api constructor.
@@ -37,33 +39,48 @@ class Api implements ApiInterface
         $this->client = $client;
     }
 
-    public function sendMessage(ParameterInterface $parameter)
+    /**
+     * @throws ResponseException
+     */
+    public function sendMessage(ParameterInterface $parameter): array
     {
         return $this->call('POST', $this->config->getBaseUrl(), $parameter->getModifyParameters());
     }
 
-    public function getShortDrByMessageId($messageId)
+    /**
+     * @throws ResponseException
+     */
+    public function getShortDrByMessageId(string $messageId): array
     {
         $this->config->setMessageId($messageId);
 
         return $this->call('GET', $this->config->getShortDrByMessageIdUrl());
     }
 
-    public function getShortDrByExtraId($extraId)
+    /**
+     * @throws ResponseException
+     */
+    public function getShortDrByExtraId(string $extraId): array
     {
         $this->config->setExtraId($extraId);
 
         return $this->call('GET', $this->config->getShortDrByExtraIdUrl());
     }
 
-    public function getFullDrByMessageId($messageId)
+    /**
+     * @throws ResponseException
+     */
+    public function getFullDrByMessageId(string $messageId): array
     {
         $this->config->setMessageId($messageId);
 
         return $this->call('GET', $this->config->getFullDrByMessageIdUrl());
     }
 
-    public function getFullDrByExtraId($extraId)
+    /**
+     * @throws ResponseException
+     */
+    public function getFullDrByExtraId(string $extraId): array
     {
         $this->config->setExtraId($extraId);
 
@@ -71,15 +88,14 @@ class Api implements ApiInterface
     }
 
     /**
-     * Send request.
-     *
-     * @param $method
-     * @param $url
-     * @param $params
+     * @param string $method
+     * @param string $url
+     * @param array  $params
      *
      * @return mixed
+     * @throws ResponseException
      */
-    protected function call($method, $url, $params = [])
+    protected function call(string $method, string $url, array $params = []): array
     {
         $response = $this->client->request($method, $url, $params);
 

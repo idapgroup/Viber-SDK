@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IdapGroup\ViberSdk;
 
 use IdapGroup\ViberSdk\Exceptions\InvalidConfigException;
+use IdapGroup\ViberSdk\Exceptions\ResponseException;
 use IdapGroup\ViberSdk\Interfaces\ClientInterface;
 
 /**
@@ -12,10 +15,17 @@ use IdapGroup\ViberSdk\Interfaces\ClientInterface;
  */
 class Client implements ClientInterface
 {
-    private $login;
-    private $password;
+    private string $login;
+    private string $password;
 
-    public function __construct($params)
+    /**
+     * Client constructor
+     *
+     * @param array $params
+     *
+     * @throws InvalidConfigException
+     */
+    public function __construct(array $params)
     {
         if (!isset($params['login']) || !isset($params['password'])) {
             throw new InvalidConfigException('Login and password must be set');
@@ -26,13 +36,9 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param $method
-     * @param $url
-     * @param $params
-     *
-     * @return mixed
+     * @throws ResponseException
      */
-    public function request($method, $url, $params = [])
+    public function request(string $method, string $url, array $params = []): array
     {
         $ch = curl_init();
 
@@ -61,6 +67,10 @@ class Client implements ClientInterface
         $data = json_decode(curl_exec($ch), true);
 
         curl_close($ch);
+
+        if (empty($data)){
+            throw new ResponseException('No response returned');
+        }
 
         return $data;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IdapGroup\ViberSdk\Interfaces;
 
 /**
@@ -10,11 +12,11 @@ namespace IdapGroup\ViberSdk\Interfaces;
 interface ClientInterface
 {
     /**
-     * @param $method
-     * @param $url
-     * @param $params
+     * @param string $method
+     * @param string $url
+     * @param array  $params
      *
-     * @return mixed
+     * @return array
      */
-    public function request($method, $url, $params);
+    public function request(string $method, string $url, array $params): array;
 }

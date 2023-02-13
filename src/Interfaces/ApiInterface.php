@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IdapGroup\ViberSdk\Interfaces;
 
 /**
@@ -14,33 +16,33 @@ interface ApiInterface
      *
      * @return array
      */
-    public function sendMessage(ParameterInterface $parameter);
+    public function sendMessage(ParameterInterface $parameter): array;
 
     /**
      * @param string $messageId
      *
      * @return array
      */
-    public function getShortDrByMessageId($messageId);
+    public function getShortDrByMessageId(string $messageId): array;
 
     /**
      * @param string $extraId
      *
      * @return array
      */
-    public function getShortDrByExtraId($extraId);
+    public function getShortDrByExtraId(string $extraId): array;
 
     /**
      * @param string $messageId
      *
      * @return array
      */
-    public function getFullDrByMessageId($messageId);
+    public function getFullDrByMessageId(string $messageId): array;
 
     /**
      * @param string $extraId
      *
      * @return array
      */
-    public function getFullDrByExtraId($extraId);
+    public function getFullDrByExtraId(string $extraId): array;
 }

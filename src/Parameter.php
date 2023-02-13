@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IdapGroup\ViberSdk;
 
 use IdapGroup\ViberSdk\Exceptions\InvalidConfigException;
@@ -15,13 +17,6 @@ use IdapGroup\ViberSdk\Interfaces\ViberInterface;
  */
 class Parameter implements ParameterInterface
 {
-    const   REQUIRE_BASE_PARAMS = [
-        'phone_number',
-        'is_promotional',
-        'channels',
-        'channel_options',
-    ];
-
     const   VALID_CHANNELS = [
         'viber',
         'sms',
@@ -31,21 +26,32 @@ class Parameter implements ParameterInterface
     const   TAG_MAX_LENGTH      = 63;
     const   VALID_DATE_FORMAT   = 'Y-m-d H:i:s';
 
-    private $phone_number;
-    private $extra_id;
-    private $tag;
-    private $callback_url;
-    private $start_time;
-    private $is_promotional;
-    private $channels;
-    private $channel_options;
+    private int $phone_number;
+    private string $extra_id;
+    private string $tag;
+    private string $callback_url;
+    private string $start_time;
+    private bool $is_promotional;
+    private array $channels;
+    private array $channel_options;
 
-    public function setPhoneNumber($phoneNumber)
+    /**
+     * @param int $phoneNumber
+     *
+     * @return void
+     */
+    public function setPhoneNumber(int $phoneNumber): void
     {
-        $this->phone_number = preg_replace('/[\s\+]/', '', $phoneNumber);
+        $this->phone_number = $phoneNumber;
     }
 
-    public function setExtraId($extraId)
+    /**
+     * @param string $extraId
+     *
+     * @return void
+     * @throws InvalidConfigException
+     */
+    public function setExtraId(string $extraId): void
     {
         if (strlen($extraId) > self::EXTRA_ID_MAX_LENGTH) {
             throw new InvalidConfigException('Set valid extra id');
@@ -54,7 +60,13 @@ class Parameter implements ParameterInterface
         $this->extra_id = $extraId;
     }
 
-    public function setTag($tag)
+    /**
+     * @param string $tag
+     *
+     * @return void
+     * @throws InvalidConfigException
+     */
+    public function setTag(string $tag): void
     {
         if (strlen($tag) > self::TAG_MAX_LENGTH) {
             throw new InvalidConfigException('Set valid tag');
@@ -63,12 +75,23 @@ class Parameter implements ParameterInterface
         $this->tag = $tag;
     }
 
-    public function setCallbackUrl($callbackUrl)
+    /**
+     * @param string $callbackUrl
+     *
+     * @return void
+     */
+    public function setCallbackUrl(string $callbackUrl): void
     {
         $this->callback_url = $callbackUrl;
     }
 
-    public function setStartTime($startTime)
+    /**
+     * @param string $startTime
+     *
+     * @return void
+     * @throws InvalidConfigException
+     */
+    public function setStartTime(string $startTime): void
     {
         if (!$this->validateDate($startTime)) {
             throw new InvalidConfigException('Set valid start time');
@@ -77,16 +100,23 @@ class Parameter implements ParameterInterface
         $this->start_time = $startTime;
     }
 
-    public function setIsPromotional($isPromotional)
+    /**
+     * @param bool $isPromotional
+     *
+     * @return void
+     */
+    public function setIsPromotional(bool $isPromotional): void
     {
-        if (!is_bool($isPromotional)) {
-            throw new InvalidConfigException('IsPromotional must be an boolean');
-        }
-
         $this->is_promotional = $isPromotional;
     }
 
-    public function setChannels($channels)
+    /**
+     * @param array $channels
+     *
+     * @return void
+     * @throws InvalidConfigException
+     */
+    public function setChannels(array $channels): void
     {
         if (empty($channels) || !empty(array_diff($channels, self::VALID_CHANNELS))) {
             throw new InvalidConfigException('Set valid channels');
@@ -95,7 +125,14 @@ class Parameter implements ParameterInterface
         $this->channels = $channels;
     }
 
-    public function setChannelsOptions(SmsInterface $sms = null, ViberInterface $viber = null)
+    /**
+     * @param SmsInterface|null   $sms
+     * @param ViberInterface|null $viber
+     *
+     * @return void
+     * @throws InvalidConfigException
+     */
+    public function setChannelsOptions(SmsInterface $sms = null, ViberInterface $viber = null): void
     {
         $channelsOptions = [];
 
@@ -114,7 +151,10 @@ class Parameter implements ParameterInterface
         $this->channel_options = $channelsOptions;
     }
 
-    public function getModifyParameters()
+    /**
+     * @throws InvalidConfigException
+     */
+    public function getModifyParameters(): array
     {
         if (!isset($this->phone_number) || !isset($this->is_promotional)
             || !isset($this->channels)
@@ -149,7 +189,13 @@ class Parameter implements ParameterInterface
         return $params;
     }
 
-    private function validateDate($date, $format = self::VALID_DATE_FORMAT)
+    /**
+     * @param string $date
+     * @param string $format
+     *
+     * @return bool
+     */
+    private function validateDate(string $date, string $format = self::VALID_DATE_FORMAT): bool
     {
         $d = DateTime::createFromFormat($format, $date);
 

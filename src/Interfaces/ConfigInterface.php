@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IdapGroup\ViberSdk\Interfaces;
 
 /**
@@ -9,42 +11,50 @@ namespace IdapGroup\ViberSdk\Interfaces;
  */
 interface ConfigInterface
 {
-    public function setMessageId($messageId);
+    /**
+     * @param string $messageId
+     *
+     * @return void
+     */
+    public function setMessageId(string $messageId): void;
 
-    public function setExtraId($extraId);
+    /**
+     * @param string $extraId
+     */
+    public function setExtraId(string $extraId): void;
 
     /**
      * @return string
      */
-    public function getMessageId();
+    public function getMessageId(): string;
 
     /**
      * @return string
      */
-    public function getExtraId();
+    public function getExtraId(): string;
 
     /**
      * @return string
      */
-    public function getBaseUrl();
+    public function getBaseUrl(): string;
 
     /**
      * @return string
      */
-    public function getFullDrByMessageIdUrl();
+    public function getFullDrByMessageIdUrl(): string;
 
     /**
      * @return string
      */
-    public function getFullDrByExtraIdUrl();
+    public function getFullDrByExtraIdUrl(): string;
 
     /**
      * @return string
      */
-    public function getShortDrByMessageIdUrl();
+    public function getShortDrByMessageIdUrl(): string;
 
     /**
      * @return string
      */
-    public function getShortDrByExtraIdUrl();
+    public function getShortDrByExtraIdUrl(): string;
 }

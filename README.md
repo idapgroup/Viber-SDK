@@ -21,7 +21,7 @@ or add
 ```json
 {
   "require": {
-      "idapgroup/viber-sdk": "^0.3.0"
+      "idapgroup/viber-sdk": "^1.0.0"
   }
 }
 ```
